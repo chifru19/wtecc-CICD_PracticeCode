@@ -6,8 +6,8 @@ spec:
   workspaces:
     - name: pipeline-workspace
   params:
-    - name: build-image
     - name: repo-url
+    - name: build-image
     - name: branch
       default: master
   tasks:
@@ -35,33 +35,34 @@ spec:
     - name: lint
       workspaces:
         - name: source
-          workspace: pipeline-workspace          
+          workspace: pipeline-workspace
       taskRef:
-        name: flake8
+        name: eslint
       params:
       - name: image
-        value: "python:3.9-slim"
+        value: "node:18-alpine"
       - name: args
-        value: ["--count","--max-complexity=10","--max-line-length=127","--statistics"]
+        value: ["--format", "stylish", "--ext", ".js", "."]
       runAfter:
         - clone
+
 
     - name: tests
       workspaces:
         - name: source
-          workspace: pipeline-workspace          
+          workspace: pipeline-workspace
       taskRef:
-        name: nose
+        name: jest
       params:
       - name: args
-        value: "-v --with-spec --spec-color"
+        value: "--verbose --coverage"
       runAfter:
         - lint
 
     - name: build
       workspaces:
         - name: source
-          workspace: pipeline-workspace          
+          workspace: pipeline-workspace
       taskRef:
         name: buildah
         kind: ClusterTask
