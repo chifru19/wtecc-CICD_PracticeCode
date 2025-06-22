@@ -53,30 +53,43 @@ spec:
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: nose
+  name: eslint
 spec:
-  params:
-    - name: args
-      description: Arguments to pass to nose
-      type: string
-      default: "-v"
   workspaces:
     - name: source
   steps:
-    - name: nosetests
-      image: python:3.9-slim
+    - name: install-dependencies
+      image: node:18
       workingDir: $(workspaces.source.path)
       script: |
-        #!/bin/bash
+        npm install
+    - name: run-eslint
+      image: node:18
+      workingDir: $(workspaces.source.path)
+      script: |
+        npx eslint .
+
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: jest
+spec:
+  description: This task runs Jest tests for JavaScript applications
+  workspaces:
+    - name: source
+  params:
+    - name: args
+      description: Arguments to pass to Jest
+      type: string
+      default: "--verbose"
+  steps:
+    - name: test
+      image: node:18-alpine
+      workingDir: $(workspaces.source.path)
+      script: |
+        #!/bin/sh
         set -e
+        npm ci
+        npm test -- $(params.args)
 
-        echo "***** Environment *****"
-        python --version
-        pwd
-
-        echo "***** Installing dependencies *****"
-        python -m pip install --upgrade pip wheel
-        pip install -r requirements.txt
-
-        echo "***** Running nosetests with: $(params.args)"
-        nosetests $(params.args)
