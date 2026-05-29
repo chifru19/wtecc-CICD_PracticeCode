@@ -9,15 +9,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: node:20-alpine
-      options: --user root
+    container: node:20-alpine
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Install and Build
-        working-directory: service
         run: |
+          cp -r service /tmp/build_dir
+          cd /tmp/build_dir
           npm install
           npm run build
