@@ -11,12 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     container: node:20
     
+    # This tells npm to run all commands from inside this subdirectory
+    defaults:
+      run:
+        working-directory: wtecc-CICD_PracticeCode
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        
-      - name: Debug - List directory structure
-        run: ls -R
         
       - name: Install dependencies
         run: npm install
