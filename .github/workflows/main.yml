@@ -9,18 +9,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # REMOVED: container: node:20 
-    
-    defaults:
-      run:
-        working-directory: wtecc-CICD_PracticeCode
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         
       - name: Install dependencies
+        # Target the nested directory directly
+        working-directory: ./wtecc-CICD_PracticeCode
         run: npm install
         
       - name: Run build
+        working-directory: ./wtecc-CICD_PracticeCode
         run: npm run build
