@@ -2,17 +2,22 @@ name: CI workflow
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ main ]
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: node:20-alpine
+    defaults:
+      run:
+        working-directory: service
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-        
+        uses: actions/checkout@v4
+
       - name: Install and Build
         run: |
-          cd wtecc-CICD_PracticeCode && npm install && npm run build
+          npm install
+          npm run build
