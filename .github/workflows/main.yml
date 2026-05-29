@@ -13,7 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install and Build
+      - name: Debug and Install
         run: |
-          npm install
-          npm run build
+          node -v
+          npm --version
+          npm install --verbose
+          
+      - name: Build
+        run: npm run build
