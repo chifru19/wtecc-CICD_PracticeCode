@@ -15,10 +15,12 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Install dependencies
-        # Target the nested directory directly
-        working-directory: ./wtecc-CICD_PracticeCode
-        run: npm install
+        # Use shell command to find and enter the directory dynamically
+        run: |
+          cd wtecc-CICD_PracticeCode
+          npm install
         
       - name: Run build
-        working-directory: ./wtecc-CICD_PracticeCode
-        run: npm run build
+        run: |
+          cd wtecc-CICD_PracticeCode
+          npm run build
