@@ -14,13 +14,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         
-      - name: Install dependencies
-        # Use shell command to find and enter the directory dynamically
+      - name: Find and Run Build
         run: |
-          cd wtecc-CICD_PracticeCode
+          # Find the directory containing package.json
+          TARGET_DIR=$(find . -name "package.json" -exec dirname {} \; | head -n 1)
+          echo "Found project at: $TARGET_DIR"
+          
+          # Move to that directory and run the commands
+          cd "$TARGET_DIR"
           npm install
-        
-      - name: Run build
-        run: |
-          cd wtecc-CICD_PracticeCode
           npm run build
