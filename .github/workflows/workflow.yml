@@ -14,11 +14,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug - List files
-        run: ls -R
-
       - name: Install and Build
-        working-directory: service
+        # This navigates into the nested service folder relative to the workspace root
+        working-directory: ./wtecc-CICD_PracticeCode/service
         run: |
           npm install
           npm run build
