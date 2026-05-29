@@ -13,8 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install and Build
+      - name: Debug and Build
         working-directory: service
         run: |
+          echo "Current directory: $(pwd)"
+          ls -F
           npm install
           npm run build
