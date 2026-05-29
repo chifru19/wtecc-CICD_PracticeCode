@@ -1,6 +1,5 @@
 name: CI Pipeline
 
-# Events that trigger the workflow
 on:
   push:
     branches: [ main ]
@@ -9,11 +8,13 @@ on:
 
 jobs:
   build:
-    # Adding the Job Runner
     runs-on: ubuntu-latest
-    
-    # Adding a container to the job runner
     container: node:20
+    
+    # This ensures all steps execute inside the nested folder
+    defaults:
+      run:
+        working-directory: wtecc-CICD_PracticeCode
     
     steps:
       - name: Checkout code
