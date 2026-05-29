@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Reveal structure
+      - name: Install and Build
         run: |
-          echo "Listing all files in the root:"
-          find . -maxdepth 2 -not -path '*/.*'
+          npm install
+          npm run build
