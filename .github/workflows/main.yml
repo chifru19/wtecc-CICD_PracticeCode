@@ -14,6 +14,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         
-      - name: Install and Build
+      - name: Find and Run Build
         run: |
-          cd wtecc-CICD_PracticeCode && npm install && npm run build
+          # Recursively find the directory that contains package.json
+          PROJECT_DIR=$(find . -name "package.json" -exec dirname {} \; | head -n 1)
+          
+          if [ -z "$PROJECT_DIR" ]; then
+            echo "Error: package.json not found!"
+            exit 1
+          fi
+          
+          echo "Found project at: $PROJECT_DIR"
+          cd "$PROJECT_DIR"
+          npm install
+          npm run build
