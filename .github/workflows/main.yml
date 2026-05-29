@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI workflow
 
 on:
   push:
@@ -9,10 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         
-      - name: List all files in the workspace
-        run: ls -R
+      - name: Install and Build
+        run: |
+          cd wtecc-CICD_PracticeCode && npm install && npm run build
