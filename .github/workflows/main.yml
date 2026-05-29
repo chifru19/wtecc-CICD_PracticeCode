@@ -9,21 +9,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: node:20
+    # REMOVED: container: node:20 
+    
+    defaults:
+      run:
+        working-directory: wtecc-CICD_PracticeCode
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         
-      # By running ls here, we verify the exact path needed
-      - name: List files
-        run: ls -R
-        
-      # Use working-directory only on the steps that need it
       - name: Install dependencies
-        working-directory: wtecc-CICD_PracticeCode
         run: npm install
         
       - name: Run build
-        working-directory: wtecc-CICD_PracticeCode
         run: npm run build
