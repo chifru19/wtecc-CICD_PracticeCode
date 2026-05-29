@@ -10,14 +10,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: node:20-alpine
-    defaults:
-      run:
-        working-directory: service
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Debug - List files
+        run: ls -R
+
       - name: Install and Build
+        working-directory: service
         run: |
           npm install
           npm run build
