@@ -9,11 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: python:3.9-slim
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Setup Python 3.9
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.9"
