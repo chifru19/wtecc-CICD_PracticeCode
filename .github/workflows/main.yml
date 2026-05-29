@@ -13,10 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug and Build
-        working-directory: service
+      - name: Reveal structure
         run: |
-          echo "Current directory: $(pwd)"
-          ls -F
-          npm install
-          npm run build
+          echo "Listing all files in the root:"
+          find . -maxdepth 2 -not -path '*/.*'
