@@ -9,14 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: node:20-alpine
+    container: python:3.9-slim
     steps:
-      - name: Checkout code
+      - name: Check out the code
         uses: actions/checkout@v4
-
-      - name: Install and Build
-        # This navigates into the nested service folder relative to the workspace root
-        working-directory: ./wtecc-CICD_PracticeCode/service
-        run: |
-          npm install
-          npm run build
