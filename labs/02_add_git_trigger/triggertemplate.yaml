@@ -1,14 +1,25 @@
 apiVersion: triggers.tekton.dev/v1beta1
 kind: TriggerTemplate
 metadata:
-  name: <place-name-here>
+  name: cd-template
 spec:
   params:
-  # Add parameters here
+  - name: repo-url
+  - name: branch
   resourcetemplates:
-    - apiVersion: tekton.dev/v1beta1
-      kind: PipelineRun
-      metadata:
-        generateName: cd-pipeline-run-
-      spec:
-      # Add pipeline definition here
+  - apiVersion: tekton.dev/v1beta1
+    kind: PipelineRun
+    metadata:
+      generateName: cd-pipeline-run-
+    spec:
+      pipelineRef:
+        name: cd-pipeline
+      params:
+      - name: repo-url
+        value: $(tt.params.repo-url)
+      - name: branch
+        value: $(tt.params.branch)
+      workspaces:
+      - name: shared-data
+        persistentVolumeClaim:
+          claimName: source-pvc
