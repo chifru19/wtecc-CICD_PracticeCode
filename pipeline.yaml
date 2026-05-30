@@ -3,7 +3,14 @@ kind: Pipeline
 metadata:
   name: hello-pipeline
 spec:
+  params:
+    - name: pipeline-message
+      type: string
+      default: "Hello from Pipeline!"
   tasks:
     - name: echo-hello-world
       taskRef:
-        name: hello-world
+        name: echo-task
+      params:
+        - name: message
+          value: $(params.pipeline-message)
