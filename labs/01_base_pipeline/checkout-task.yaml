@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: checkout
+spec:
+  workspaces:
+    - name: source
+  params:
+    - name: repo-url
+      type: string
+    - name: branch
+      type: string
+  steps:
+    - name: checkout
+      image: alpine/git
+      script: |
+        git clone --branch $(params.branch) $(params.repo-url) $(workspaces.source.path)
